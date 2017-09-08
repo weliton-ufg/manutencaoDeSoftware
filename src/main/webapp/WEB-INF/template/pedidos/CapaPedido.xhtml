@@ -25,18 +25,10 @@
         </p:selectOneMenu>
         
         <p:outputLabel value="Cliente" for="cliente"/>
-        <h:panelGroup>
-	        <p:inputText id="cliente" size="40" value="#{cadastroPedidoBean.nomeCliente}" 
-	        	readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}" />
-	        	
-	        <p:commandButton icon="ui-icon-search" title="Pesquisar" process="@this"
-	        	update="@none" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"
-	        	action="#{selecaoClienteBean.abrirDialogo}"
-	        	ignoreAutoUpdate="true">
-	        	<p:ajax event="dialogReturn" listener="#{cadastroPedidoBean.clienteSelecionado}"
-	        		update="cliente" ignoreAutoUpdate="true" />
-	        </p:commandButton>
-        </h:panelGroup>
+                <p:autoComplete id="cliente" size="40" dropdown="true" 
+        	value="#{cadastroPedidoBean.pedido.cliente}" completeMethod="#{cadastroPedidoBean.completarCliente}"
+        	var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" forceSelection="true" 
+        	disabled="#{cadastroPedidoBean.pedido.naoAlteravel}" />
         
         <p:outputLabel value="Forma de pagamento" for="formaPagamento"/>
         <p:selectOneMenu id="formaPagamento" value="#{cadastroPedidoBean.pedido.formaPagamento}"
