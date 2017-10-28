@@ -6,7 +6,7 @@
 
 	<p:panelGrid columns="4" style="width: 100%" columnClasses="rotulo, campo, rotulo, campo">
 		<p:outputLabel value="Data da entrega" for="dataEntrega" />
-		<p:calendar id="dataEntrega" size="10" pattern="dd/MM/yyyy"
+                    <p:calendar id="dataEntrega" size="10" pattern="dd/MM/yyyy" mindate="today" 
 			value="#{cadastroPedidoBean.pedido.dataEntrega}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}" />
 		
 		<p:spacer />
