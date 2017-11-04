@@ -22,7 +22,7 @@ public class EmissaoPedidoBean implements Serializable {
 	private EmissaoPedidoService emissaoPedidoService;
 	
 	@Inject
-	@PedidoEdicao
+	//@PedidoEdicao
 	private Pedido pedido;
 	
 	@Inject

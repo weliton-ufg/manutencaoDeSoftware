@@ -25,7 +25,7 @@ public class CancelamentoPedidoBean implements Serializable {
 	private Event<PedidoAlteradoEvent> pedidoAlteradoEvent;
 	
 	@Inject
-	@PedidoEdicao
+	//@PedidoEdicao
 	private Pedido pedido;
 	
 	public void cancelarPedido() {

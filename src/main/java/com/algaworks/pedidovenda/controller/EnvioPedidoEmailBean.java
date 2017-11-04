@@ -25,7 +25,7 @@ public class EnvioPedidoEmailBean implements Serializable {
 	private Mailer mailer;
 	
 	@Inject
-	@PedidoEdicao
+	//@PedidoEdicao
 	private Pedido pedido;
 	
 	public void enviarPedido() {

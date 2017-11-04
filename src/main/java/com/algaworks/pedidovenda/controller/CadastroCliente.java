@@ -48,8 +48,9 @@ public class CadastroCliente implements Serializable {
 	
 	private String sku;
 	
-	@Produces
-	@PedidoEdicao
+	//@Produces
+	//@PedidoEdicao
+          @Inject
 	private Pedido pedido;
 	
 	private List<Usuario> vendedores;

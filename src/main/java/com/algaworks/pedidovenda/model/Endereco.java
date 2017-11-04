@@ -26,6 +26,7 @@ public class Endereco implements Serializable {
 	private String uf;
 	private String cep;
 	private Cliente cliente;
+          private String bairro;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,5 +128,13 @@ public class Endereco implements Serializable {
 			return false;
 		return true;
 	}
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
 }

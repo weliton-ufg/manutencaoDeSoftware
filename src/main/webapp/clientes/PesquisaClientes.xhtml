@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/LayoutPadrao.xhtml">
+
+    <ui:define name="corpo">
+        <h1 class="aw-page-title">Pesquisa de clientes</h1>
+
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup align="right">
+                    <p:button value="Novo cliente" outcome="/clientes/CadastroCliente"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <hr/>
+            <div>
+                <p:inputText id="nome" size="60" value="#{clientesManager.nome}" placeholder="Nome do cliente" />
+                <p:spacer width="10px"/>
+                <p:commandButton value="Pesquisar" action="#{clientesManager.pesquisar}"
+                                 update="@form" />
+            </div>
+            
+            <p:dataTable id="dtCliente" value="#{clientesManager.clientesFiltrados}" var="cliente"
+                         selectionMode="single" selection="#{clientesManager.clienteEdicao}"
+                         rowKey="#{cliente.id}" reflow="true"
+                         style="margin-top: 20px">
+                <p:column headerText="Nome">
+                    <h:outputText value="#{cliente.nome}" />
+                </p:column>
+                <p:column headerText="CPF" priority="3">
+                    <h:outputText value="#{cliente.cpf}" />
+                </p:column>
+                <p:column headerText="Telefone" priority="6">
+                    <h:outputText value="#{cliente.telefone}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton icon="ui-icon-pencil" value="Editar" />
+                </f:facet>
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
