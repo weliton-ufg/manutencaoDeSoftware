@@ -21,7 +21,6 @@
                 <p:commandButton value="Pesquisar" action="#{clientesManager.pesquisar}"
                                  update="@form" />
             </div>
-            
             <p:dataTable id="dtCliente" value="#{clientesManager.clientesFiltrados}" var="cliente"
                          selectionMode="single" selection="#{clientesManager.clienteEdicao}"
                          rowKey="#{cliente.id}" reflow="true"
