@@ -1,91 +1,84 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/template/LayoutPadrao.xhtml">
-	
-	<ui:define name="corpo">
-		<h1 class="aw-page-title">Cadastro de cliente</h1>
-		
-		<h:form id="frm">
-			<p:toolbar>
-				<p:toolbarGroup>
-					<p:commandButton value="Salvar" />
-				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
-					<p:commandButton value="Novo" />
-                                                  <p:button value="Pesquisa" outcome="/clientes/PesquisaClientes" />
-                                                  <p:remoteCommand name="remotComandPesquisarCliente" action="#{clientesManager.pesquisar}" process="@this"/>
-                                                    
-				</p:toolbarGroup>
-			</p:toolbar>
-			
-			<div class="ui-fluid">
-				<p:tabView style="margin-top: 20px">
-					<p:tab title="Dados básicos">
-						<p:panelGrid columns="4" layout="grid"
-								columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
-								styleClass="panelgrid-noborder">
-							<p:outputLabel value="Nome" for="nome" />
-							<p:inputText id="nome" required="true" />
-							
-							<p:outputLabel value="CPF" for="cpf" />
-							<p:inputMask id="cpf" required="true" mask="999.999.999-99"
-								style="width: 70%" />
-							
-							<p:outputLabel value="Telefone" for="telefone" />
-							<p:inputText id="telefone" required="true" />
-							
-							<p:outputLabel value="Celular" for="celular" />
-							<p:inputText id="celular" />
-							
-							<p:outputLabel value="E-mail" for="email" />
-							<p:inputText id="email" required="true" />
-							
-							<p:outputLabel value="Estado" for="estado" />
-							<p:selectOneMenu id="estado">
-								<f:selectItem itemLabel="Selecione" />
-								<f:selectItem itemLabel="Minas Gerais" itemValue="Minas Gerais" />
-								<f:selectItem itemLabel="São Paulo" itemValue="São Paulo" />
-							</p:selectOneMenu>
-							
-							<p:outputLabel value="Data de nascimento" for="dataNascimento" />
-							<p:inputText id="dataNascimento" />
-							
-							<p:outputLabel/>
-							<p:selectBooleanCheckbox itemLabel="Parcelamento liberado" />
-						</p:panelGrid>
-					</p:tab>
-					
-					<p:tab title="Endereços">
-						<p:commandButton value="Novo endereço" style="width: auto" />
-						
-						<p:dataTable value="#{clientesManager.clienteEdicao.enderecos}" var="endereco"
-							emptyMessage="O cliente ainda não possui endereços"
-							style="margin-top: 10px">
-							<p:column headerText="Logradouro">
-								<h:outputText value="#{endereco.logradouro}"/>
-							</p:column>
-							<p:column headerText="Número">
-								<h:outputText value="#{endereco.numero}"/>
-							</p:column>
-							<p:column headerText="Bairro" priority="4">
-								<h:outputText value="#{endereco.bairro}"/>
-							</p:column>
-							<p:column headerText="Cidade" priority="6">
-								<h:outputText value="#{endereco.cidade}"/>
-							</p:column>
-						</p:dataTable>
-					</p:tab>
-					
-					<p:tab title="Observações">
-						<p:inputTextarea rows="7" />
-					</p:tab>
-				</p:tabView>
-			</div>
-			
-		</h:form>
-	</ui:define>
-	
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroClienteBean.editando ? 'Edição de Cliente' : 'Novo Cliente'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata> 
+            <f:viewParam name="cliente" value="#{cadastroClienteBean.cliente}"/>
+            <f:viewAction action="#{cadastroClienteBean.inicializar}" />
+        </f:metadata>
+        <h:form id="frm">
+            <h1>#{cadastroClienteBean.editando ? 'Edição de Cliente' : 'Novo Cliente'}</h1>
+            <p:messages autoUpdate="true" closable="true" />
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Salvar" process="@form @this"  action="#{cadastroClienteBean.salvar}" update="@form" validateClient="false" styleClass="btn btn-outline btn-warning" />
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Novo" outcome="/clientes/CadastroCliente" styleClass="btn btn-outline btn-warning"/>
+                    <p:button value="Pesquisa" outcome="/clientes/PesquisaClientes" styleClass="btn btn-outline btn-warning"/>
+                    <p:remoteCommand name="remotComandPesquisarCliente" action="#{cadastroClienteBean.pesquisar}" process="@this"/>
+
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <div class="ui-fluid">
+                <p:tabView style="margin-top: 20px" id="tabDadosCliente">
+                    <p:tab title="Dados básicos">
+                        <p:panelGrid columns="4" layout="grid" id="dadosCliente"
+                                     columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+                                     styleClass="panelgrid-noborder">
+                            <p:outputLabel value="Nome" for="nome" />
+                            <p:inputText id="nome"  value="#{cadastroClienteBean.cliente.nome}"
+                                         required="true" requiredMessage="Informe o nome."/>
+
+                            <p:outputLabel value="CPF" for="cpf" />
+                            <p:inputMask id="cpf"  mask="999.999.999-99"
+                                         style="width: 70%" value="#{cadastroClienteBean.cliente.cpf}"
+                                         required="true" requiredMessage="Informe o cpf."/>
+
+                            <p:outputLabel value="Telefone" for="telefone" />
+                            <p:inputMask id="telefone"  value="#{cadastroClienteBean.cliente.telefone}"
+                                         required="true" requiredMessage="Informe o telefone." mask="(99)9999-9999"/>
+
+                            <p:outputLabel value="Celular" for="celular" />
+                            <p:inputMask id="celular" value="#{cadastroClienteBean.cliente.celular}"
+                                         required="true" requiredMessage="Informe o celular."  mask="(99)99999-9999"/>
+
+                            <p:outputLabel value="E-mail" for="email" />
+                            <p:inputText id="email" label="email" size="40"  required="true" requiredMessage="Informe um email."
+                                         validatorMessage="Formato de email invalido." value="#{cadastroClienteBean.cliente.email}" >
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+
+                            <p:outputLabel for="tipo" value="Tipo" />
+                            <p:selectOneMenu id="tipo" value="#{cadastroClienteBean.cliente.tipo}" style="width:125px" required="true" requiredMessage="Informe o Tipo.">
+                                <f:selectItem itemLabel="Selecione" itemValue="" />
+                                <f:selectItems value="#{cadastroClienteBean.listaTipoPessoa}" var="tipoPessoa" itemLabel="#{tipoPessoa}" itemValue="#{tipoPessoa}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Data de nascimento" for="dataNascimento" />
+                            <p:calendar id="dataNascimento" value="#{cadastroClienteBean.cliente.dataNascimento}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy"/> 
+                            </p:calendar>
+
+                            <p:outputLabel/>
+                        </p:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Observações">
+                        <p:inputTextarea rows="7" value="#{cadastroClienteBean.cliente.observacoes}" maxlength="5000"/>
+                    </p:tab>
+                </p:tabView>
+            </div>
+
+        </h:form>
+    </ui:define>
+
 </ui:composition>

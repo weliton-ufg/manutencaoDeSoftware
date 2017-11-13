@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import com.algaworks.pedidovenda.model.Cliente;
+import com.algaworks.pedidovenda.service.NegocioException;
+import com.algaworks.pedidovenda.util.jpa.Transactional;
 
 public class Clientes implements Serializable {
 
@@ -24,6 +26,11 @@ public class Clientes implements Serializable {
                 + "where upper(nome) like :nome", Cliente.class)
                 .setParameter("nome", nome.toUpperCase() + "%")
                 .getResultList();
+    }
+
+    @Transactional
+    public Cliente salvar(Cliente cliente) throws NegocioException {
+        return manager.merge(cliente);
     }
 
 }

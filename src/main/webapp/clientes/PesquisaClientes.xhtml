@@ -11,18 +11,18 @@
         <h:form id="frm">
             <p:toolbar>
                 <p:toolbarGroup align="right">
-                    <p:button value="Novo cliente" outcome="/clientes/CadastroCliente"/>
+                    <p:button value="Novo cliente" onclick="novo()" outcome="/clientes/CadastroCliente"/>
+                    <p:remoteCommand name="novo" action="#{cadastroClienteBean.novoCliente}" process="@this"/>
                 </p:toolbarGroup>
             </p:toolbar>
             <hr/>
             <div>
-                <p:inputText id="nome" size="60" value="#{clientesManager.nome}" placeholder="Nome do cliente" />
+                <p:inputText id="nome" size="60" value="#{cadastroClienteBean.nome}" placeholder="Nome do cliente" />
                 <p:spacer width="10px"/>
-                <p:commandButton value="Pesquisar" action="#{clientesManager.pesquisar}"
-                                 update="@form" />
+                <p:commandButton value="Pesquisar" action="#{cadastroClienteBean.pesquisar}"  update="@form" />
             </div>
-            <p:dataTable id="dtCliente" value="#{clientesManager.clientesFiltrados}" var="cliente"
-                         selectionMode="single" selection="#{clientesManager.clienteEdicao}"
+            <p:dataTable id="dtCliente" value="#{cadastroClienteBean.clientesFiltrados}" var="cliente"
+                         selectionMode="single" selection="#{cadastroClienteBean.cliente}"
                          rowKey="#{cliente.id}" reflow="true"
                          style="margin-top: 20px">
                 <p:column headerText="Nome">
@@ -34,12 +34,13 @@
                 <p:column headerText="Telefone" priority="6">
                     <h:outputText value="#{cliente.telefone}" />
                 </p:column>
-
-                <f:facet name="footer">
-                    <p:commandButton icon="ui-icon-pencil" value="Editar" />
-                </f:facet>
+                <p:column style="text-align: center; width: 50px" exportable="false">
+                    <p:button id="btnEditar" icon="ui-icon-pencil" title="Editar"  outcome="/clientes/CadastroCliente">
+                        <p:tooltip id="toolTipEditar" for="btnEditar" value="Editar" showEffect="clip" position="left"/> 
+                        <f:param name="cliente" value="#{cliente.id}" />       
+                    </p:button>
+                </p:column>
             </p:dataTable>
-
         </h:form>
     </ui:define>
 

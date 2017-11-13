@@ -2,42 +2,43 @@ package com.algaworks.pedidovenda.controller;
 
 import com.algaworks.pedidovenda.model.Cliente;
 import com.algaworks.pedidovenda.model.Endereco;
+import com.algaworks.pedidovenda.model.TipoPessoa;
 import com.algaworks.pedidovenda.repository.Clientes;
+import com.algaworks.pedidovenda.service.NegocioException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
-public class ClientesManager implements Serializable {
+public class CadastroClienteBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Inject
     private Clientes clientesRepository;
     private List<Cliente> clientesFiltrados;
-    private Cliente clienteEdicao = new Cliente();
+    @Inject
+    private Cliente cliente;
     private Endereco enderecoEdicao;
     private String nome;
 
-    @PostConstruct
-    public void onInit() {
+    public CadastroClienteBean() {
+        limpar();
         pesquisar();
     }
 
-    public ClientesManager() {
-
+    public void limpar() {
+        cliente = new Cliente();
     }
 
     public void pesquisar() {
@@ -55,25 +56,37 @@ public class ClientesManager implements Serializable {
     }
 
     public String novoCliente() {
-        clienteEdicao = new Cliente();
+        cliente = new Cliente();
         return "CadastroCliente?faces-redirect=true";
     }
 
+    public void inicializar() {
+        try {
+            if (this.cliente.getId() == null) {
+                limpar();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroClienteBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void salvar() {
-        // if (!clientes.contains(clienteEdicao)) {
-        //     clientes.add(clienteEdicao);
-        // }
-        clienteEdicao = new Cliente();
+        try {
+            cliente = clientesRepository.salvar(cliente);
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(CadastroClienteBean.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        cliente = new Cliente();
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente salvo com sucesso!"));
     }
 
-    public Cliente getClienteEdicao() {
-        return clienteEdicao;
-    }
-
     public void setClienteEdicao(Cliente clienteEdicao) {
-        this.clienteEdicao = clienteEdicao;
+        this.cliente = clienteEdicao;
     }
 
     public Endereco getEnderecoEdicao() {
@@ -92,18 +105,27 @@ public class ClientesManager implements Serializable {
         this.clientesFiltrados = clientesFiltrados;
     }
 
-    /**
-     * @return the nome
-     */
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    public boolean isEditando() {
+        return this.cliente.getId() != null;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public TipoPessoa[] getListaTipoPessoa() {
+       return TipoPessoa.values();
+    }
 }

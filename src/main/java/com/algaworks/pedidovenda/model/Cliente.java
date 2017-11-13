@@ -4,19 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.inject.Inject;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import javax.persistence.OneToMany;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +26,6 @@ public class Cliente implements Serializable {
     private Long id;
     private String nome;
     private String email;
-    private String documentoReceitaFederal;
     private TipoPessoa tipo;
     private String cpf;
     private String telefone;
@@ -65,15 +63,6 @@ public class Cliente implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Column(name = "doc_receita_federal", nullable = false, length = 14)
-    public String getDocumentoReceitaFederal() {
-        return documentoReceitaFederal;
-    }
-
-    public void setDocumentoReceitaFederal(String documentoReceitaFederal) {
-        this.documentoReceitaFederal = documentoReceitaFederal;
     }
 
     @Enumerated(EnumType.STRING)

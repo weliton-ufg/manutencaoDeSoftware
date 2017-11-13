@@ -14,26 +14,28 @@ import com.algaworks.pedidovenda.repository.Clientes;
 @FacesConverter(forClass = Cliente.class)
 public class ClienteConverter implements Converter {
 
-	@Inject
-	private Clientes clientes;
-	
-	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Cliente retorno = null;
+    @Inject
+    private Clientes clientes;
 
-		if (StringUtils.isNotEmpty(value)) {
-			retorno = this.clientes.porId(new Long(value));
-		}
+    @Override
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        Cliente retorno = null;
 
-		return retorno;
-	}
+        if (StringUtils.isNotEmpty(value)) {
+            retorno = this.clientes.porId(new Long(value));
+        }
 
-	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			return ((Cliente) value).getId().toString();
-		}
-		return "";
-	}
+        return retorno;
+    }
+
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        if (value != null) {
+            Cliente cliente = (Cliente) value;
+            return cliente.getId() == null ? null : cliente.getId().toString();
+
+        }
+        return "";
+    }
 
 }
