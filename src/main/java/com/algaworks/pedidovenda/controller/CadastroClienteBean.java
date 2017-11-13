@@ -5,6 +5,7 @@ import com.algaworks.pedidovenda.model.Endereco;
 import com.algaworks.pedidovenda.model.TipoPessoa;
 import com.algaworks.pedidovenda.repository.Clientes;
 import com.algaworks.pedidovenda.service.NegocioException;
+import com.algaworks.pedidovenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,19 @@ public class CadastroClienteBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente salvo com sucesso!"));
     }
 
+    public void excluir() {
+        try {
+
+            clientesRepository.excluir(cliente);
+            //buscarContatos();
+            FacesUtil.addInfoMessage("Cliente " + cliente.getNome() + " Excluído com sucesso!");
+            clientesFiltrados.remove(cliente);
+        } catch (Exception e) {
+            FacesUtil.addInfoMessage("Erro ao excluir o cliente " + cliente.getNome());
+        }
+
+    }
+
     public void setClienteEdicao(Cliente clienteEdicao) {
         this.cliente = clienteEdicao;
     }
@@ -126,6 +140,6 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public TipoPessoa[] getListaTipoPessoa() {
-       return TipoPessoa.values();
+        return TipoPessoa.values();
     }
 }

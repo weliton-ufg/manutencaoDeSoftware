@@ -34,11 +34,24 @@
                 <p:column headerText="Telefone" priority="6">
                     <h:outputText value="#{cliente.telefone}" />
                 </p:column>
-                <p:column style="text-align: center; width: 50px" exportable="false">
+                <p:column style="text-align: center; width: 100px" exportable="false">
                     <p:button id="btnEditar" icon="ui-icon-pencil" title="Editar"  outcome="/clientes/CadastroCliente">
                         <p:tooltip id="toolTipEditar" for="btnEditar" value="Editar" showEffect="clip" position="left"/> 
                         <f:param name="cliente" value="#{cliente.id}" />       
                     </p:button>
+
+
+                    <p:commandButton styleClass=" btn btn-outline btn-danger " id="btnExcluir" process="@this" update=":frm" action="#{cadastroClienteBean.excluir}"
+                                     icon="ui-icon-trash" title="Excluir" >
+                        <f:setPropertyActionListener value="#{cliente}" target="#{cadastroClienteBean.cliente}" />	
+                        <p:confirm  header="Confirmation"  icon="ui-icon-alert" message=" Deseja realmente excluir #{cliente.nome} ?" />
+                    </p:commandButton>
+                    <p:tooltip id="toolTipExcluir" for="btnExcluir" value="Excluir" showEffect="clip"  position="left"/>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  styleClass="" >
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
                 </p:column>
             </p:dataTable>
         </h:form>
