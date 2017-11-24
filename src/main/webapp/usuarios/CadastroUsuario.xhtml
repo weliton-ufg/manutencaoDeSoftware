@@ -15,6 +15,35 @@
 
             <p:messages autoUpdate="true" closable="true" />
 
+            
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Limpar"/>
+	    			<p:button value="Salvar" />
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Pesquisa"/>
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+			
+
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+	    			
+	    		<p:outputLabel value="Nome:" for="nome"/>
+	    		<p:inputText id="nome" size="20" maxlength="20" value="" />
+	    		
+				<p:outputLabel value="Cargo: " for="cargo"/>
+	    		<p:inputText id="cargo" size="20" maxlength="20" value="" />
+	    		
+	    		<p:outputLabel value="Email:" for="email"/>
+	    		<p:inputText id="email" size="20" maxlength="20" value="" />
+	    		
+	    			
+	    		<p:outputLabel value="Senha:" for="senha"/>
+	    		<p:password id="senha" size="20" maxlength="20" value="" />
+	    			
+	    			</p:panelGrid>
 
 
 
