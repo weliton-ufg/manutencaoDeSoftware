@@ -15,6 +15,41 @@
 
             <p:messages autoUpdate="true" closable="true" />
 
+   <p:messages autoUpdate="true" closable="true" />
+
+            
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Limpar"/>
+	    			<p:button value="Salvar" />
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Pesquisa"/>
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+			
+
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+	    			
+	    		<p:outputLabel value="Nome:" for="nome"/>
+	    		<p:inputText id="nome" size="20" maxlength="20" value="" />
+	    		
+				<p:outputLabel value="Classe: " for="classe"/>
+	    		<p:inputText id="classe" size="20" maxlength="20" value="" />
+	    		
+	    		<p:outputLabel value="Localização:" for="loc"/>
+	    		<p:inputText id="loc" size="20" maxlength="20" value="" />
+	    		
+	    			 <p:outputLabel for="console" value="Ativo?" />
+        <p:selectOneRadio id="console" value="#{radioView.console}">
+            <f:selectItem itemLabel="Sim" itemValue="Sim" />
+            <f:selectItem itemLabel="Não" itemValue="Nao" />
+
+        </p:selectOneRadio>
+	    			
+	    			</p:panelGrid>
+
 
         </h:form>
     </ui:define>
