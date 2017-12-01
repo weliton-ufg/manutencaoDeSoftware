@@ -29,5 +29,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/weliton/.m2/repository/com/outjected/simple-email/0.2.5-SNAPSHOT/simple-email-0.2.5-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/simple-email-0.2.5-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

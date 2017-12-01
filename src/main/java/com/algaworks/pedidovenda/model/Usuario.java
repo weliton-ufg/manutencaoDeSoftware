@@ -26,6 +26,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	private String senha;
+	private String foto_perfil;
 	private List<Grupo> grupos = new ArrayList<>();
 	
 	@Id
@@ -73,6 +74,12 @@ public class Usuario implements Serializable {
 		this.grupos = grupos;
 	}
 	
+	public String getFoto_perfil() {
+		return foto_perfil;
+	}
+	public void setFoto_perfil(String foto_perfil) {
+		this.foto_perfil = foto_perfil;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

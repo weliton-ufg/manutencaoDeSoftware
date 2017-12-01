@@ -146,14 +146,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Abstração para envio de e-mails -->
-        <dependency>
-            <groupId>com.outjected</groupId>
-            <artifactId>simple-email</artifactId>
-            <version>0.2.5-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- Requerido para envio de e-mails -->
         <dependency>
             <groupId>javax.mail</groupId>

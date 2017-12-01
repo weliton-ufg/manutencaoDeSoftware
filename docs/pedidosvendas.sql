@@ -243,6 +243,7 @@ CREATE TABLE `usuario` (
   `email` varchar(255) NOT NULL,
   `nome` varchar(80) NOT NULL,
   `senha` varchar(20) NOT NULL,
+  `foto_perfil` varchar(255),
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_5171l57faosmj8myawaucatdw` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -254,7 +255,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'adm@hotmail.com','adm','123'),(2,'vendedor@hotmail.com','vendedor 1','123'),(3,'auxiliar@hotmail.com','auxiliar','123');
+INSERT INTO `usuario` VALUES (1,'adm@hotmail.com','adm','123', null),(2,'vendedor@hotmail.com','vendedor 1','123', null),(3,'auxiliar@hotmail.com','auxiliar','123', null);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 

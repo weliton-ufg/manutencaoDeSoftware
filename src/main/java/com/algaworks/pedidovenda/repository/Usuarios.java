@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
+import com.algaworks.pedidovenda.model.Produto;
 import com.algaworks.pedidovenda.model.Usuario;
 
 public class Usuarios implements Serializable {
@@ -39,4 +40,7 @@ public class Usuarios implements Serializable {
 		return usuario;
 	}
 	
+	public Usuario gravar(Usuario usuario) {
+		return manager.merge(usuario);
+	}	
 }

@@ -10,42 +10,56 @@
     <ui:define name="titulo">Cadastro de Usuário</ui:define>
 
     <ui:define name="corpo">
-        <h:form id="frm">
+        <f:metadata>
+        <!--  
+        <f:viewAction action="#{cadastroUsuarioBean.inicializar}" />
+        -->		
+    	</f:metadata>
+        
+        <h:form id="frm" prependId="false">
             <h1>Cadastro de Usuário</h1>
 
             <p:messages autoUpdate="true" closable="true" />
-
-            
-	    	<p:toolbar style="margin-top: 20px">
+            <p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:button value="Limpar"/>
-	    			<p:button value="Salvar" />
+	    			<p:button value="Novo" outcome="/usuarios/CadastroUsuario" />
+	    			<p:commandButton value="Salvar" id="botaoSalvar"
+	    				action="#{cadastroUsuarioBean.salvar}" update="@form"
+	    				validateClient="false"  process="@form"/>
 	    		</p:toolbarGroup>
+	    		<!-- 
 	    		<p:toolbarGroup align="right">
-	    			<p:button value="Pesquisa"/>
+	    			<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
 	    		</p:toolbarGroup>
+	    		 -->	
 	    	</p:toolbar>
-			
-
-	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    	
+	    	 <p:panelGrid>  
+	    	    <div style="position: relative;">
+	    	    <div style="position: absolute;top: 0;left: 0;">  	     	    	       
+	    	        <video id="videoID" autoplay="true" style="border: 1px solid black;" width="300" height="210"></video>
+	    	    </div>
+	    	   <div style="position: absolute;top: 0;left: 0;">
+	    	      <canvas id="canvasID" style="border: 1px solid black;" width="300" height="210"></canvas>
+	    	   </div>
+	    	 </div>    	 
+	    	 </p:panelGrid>
+	    	  <div style="margin-top: 215px;">
+	    	    <input type="button" value="Iniciar Camera" id="init" style="width: 150px; height: 30px;"/> 
+	    	    <input type="button" value="Tirar Foto" id="cap" style="width: 150px; height: 30px;"/> 
+	    	 </div>	 
+	    	 <p:inputText id="img" size="255" style="opacity:0.0;" value="#{cadastroUsuarioBean.usuario.foto_perfil}" />	    	 
+            
+            <p:panelGrid columns="2" id="painel" style="width: 30%; margin-top: 10px;botton:40px"
 	    			columnClasses="rotulo, campo">
-	    			
-	    		<p:outputLabel value="Nome:" for="nome"/>
-	    		<p:inputText id="nome" size="20" maxlength="20" value="" />
+	    		<p:outputLabel value="Nome" for="nome"/>
+	    		<p:inputText id="nome" size="60" maxlength="80" value="#{cadastroUsuarioBean.usuario.nome}" />
 	    		
-				<p:outputLabel value="Cargo: " for="cargo"/>
-	    		<p:inputText id="cargo" size="20" maxlength="20" value="" />
-	    		
-	    		<p:outputLabel value="Email:" for="email"/>
-	    		<p:inputText id="email" size="20" maxlength="20" value="" />
-	    		
-	    			
-	    		<p:outputLabel value="Senha:" for="senha"/>
-	    		<p:password id="senha" size="20" maxlength="20" value="" />
-	    			
-	    			</p:panelGrid>
-
-
+	    		<p:outputLabel value="email" for="email"/>
+	    	    <p:inputText id="email" size="60" maxlength="80" value="#{cadastroUsuarioBean.usuario.email}" />
+	    	    <p:outputLabel value="senha"/>
+    			<p:password size="30" id="password" />		
+	    	</p:panelGrid>   
 
         </h:form>
     </ui:define>

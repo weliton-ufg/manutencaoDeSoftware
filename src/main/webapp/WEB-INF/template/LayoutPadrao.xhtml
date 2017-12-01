@@ -12,6 +12,59 @@
         <h:outputStylesheet library="css" name="sistema.css" />
         <h:outputScript library="js" name="jquery.maskMoney.js"/>
         <h:outputScript library="js" name="validadores.js"/>
+     <script>
+        $(document).ready(function(){
+        	var video = null; 
+        	var canvas = null; 
+        	var context = null;
+            var execCam = false;
+            var streams = [];
+            $("#init").click(function(){
+               console.log("init cam")
+               video = document.getElementById('videoID'); 
+               canvas = document.getElementById('canvasID');
+               context = canvas.getContext('2d');
+               execCam = !execCam;
+               if(execCam){
+     	    	    video.play();
+                	context.clearRect(0, 0, canvas.width, canvas.height);
+               }
+               
+               window.URL = window.URL || window.webkitURL; 
+               navigator.getUserMedia = navigator.getUserMedia || 
+               navigator.webkitGetUserMedia || navigator.mozGetUserMedia 
+               || navigator.msGetUserMedia;
+               
+               navigator.getUserMedia({ video : true}, 
+            		   function(stream) { 
+            	       if(execCam){
+                	     video.src = window.URL.createObjectURL(stream);
+                	     streams.push(stream);
+            	       }else{
+            	    	  video.pause();
+            	    	  streams.push(stream); 
+            		      streams.forEach(s => {
+            		    	  s.getTracks().forEach(track => track.stop());  
+            		      });
+            		      streams = [];
+            	       }
+            	   }, function(e) { 
+            		   console.log('An error happened:', e); 
+                   });
+            });
+            
+            $('#canvasID').dblclick(function(){
+            	context.clearRect(0, 0, canvas.width, canvas.height);
+            	$("#init").trigger( "click" );
+            });
+            
+            $("#cap").click(function(){
+            	context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            	$('#img').val(canvas.toDataURL());
+            	$("#init").trigger( "click" );
+            });   
+        });   
+        </script>
     </h:head>
 
     <h:body>
